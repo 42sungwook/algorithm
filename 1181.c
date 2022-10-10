@@ -55,7 +55,6 @@ int main()
             }
         }
     }
-    printf("------------\n");
     printf("%s\n", word[order[0]]);
     for (int i = 1; i < cnt; i++)
     {
