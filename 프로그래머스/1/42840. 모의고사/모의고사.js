@@ -6,13 +6,13 @@ function solution(answers) {
     
     const scores = [0, 0, 0];
     
-    for (let i = 0; i < answers.length; i++)
+    for (const [i, answer] of answers.entries())
     {
-        for (let j = 0; j < 3; j++)
+        for (const [j, choice] of choices.entries())
         {
-            if (answers[i] === choices[j][i % choices[j].length])
+            if (answer === choice[i % choice.length])
             {
-                scores[j]++;
+                scores[j] += 1;
             }
         }
     }
