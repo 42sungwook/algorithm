@@ -9,7 +9,7 @@ function calHash(str) {
   for (let i = 0; i < str.length; i++) {
     const charCode = str.charCodeAt(i) - 'a'.charCodeAt(0) + 1
 		hash = (hash + charCode * pow) % M
-		pow = (pow * r)
+		pow = (pow * r) % M
   }
 	return hash
 }
