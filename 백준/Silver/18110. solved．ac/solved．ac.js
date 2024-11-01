@@ -7,13 +7,18 @@ difficulty.sort((a, b) => a - b)
 
 const pplToEliminate = Math.round(N * 0.15)
 
+if (N === 0) {
+  console.log(0)
+  return
+}
+
 const parsedArray = difficulty.slice(
   pplToEliminate,
   difficulty.length - pplToEliminate
 )
 
 const average = Math.round(
-  parsedArray.reduce((a, b) => a + b, 0) / parsedArray.length || 0
+  parsedArray.reduce((a, b) => a + b) / parsedArray.length
 )
 
 console.log(average)
