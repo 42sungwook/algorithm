@@ -19,81 +19,78 @@ class Deque {
     this.size = 0
   }
 
-  push_front(value) {
+  pushFront(value) {
     const node = new Node(value)
 
-    if (!this.head) {
-      this.head = node
-      this.tail = node
+    if (this.isEmpty()) {
+      this.head = this.tail = node
     } else {
-      const head = this.head
+      node.next = this.head
+      this.head.prev = node
       this.head = node
-      this.head.next = head
-      head.prev = this.head
     }
     this.size++
   }
 
-  push_back(value) {
+  pushBack(value) {
     const node = new Node(value)
 
-    if (this.size === 0) {
-      this.head = node
-      this.tail = node
+    if (this.isEmpty()) {
+      this.head = this.tail = node
     } else {
-      this.tail.next = node
       node.prev = this.tail
+      this.tail.next = node
       this.tail = node
     }
     this.size++
   }
 
-  pop_front() {
-    if (this.size === 0) {
-      return null
-    }
-    if (this.size === 1) {
-      const value = this.head.value
-      this.head = null
-      this.tail = null
-      this.size--
-      return value
-    }
+  popFront() {
+    if (this.isEmpty()) return null
 
-    const head = this.head
+    const value = this.head.value
     this.head = this.head.next
-    this.head.prev = null
-    this.size--
 
-    if (!this.head.next) {
-      this.tail = this.head
+    if (this.head) {
+      this.head.prev = null
+    } else {
+      this.tail = null
     }
 
-    return head.value
+    this.size--
+    return value
   }
 
-  pop_back() {
-    if (this.size === 0) {
-      return null
-    }
-    if (this.size === 1) {
-      const value = this.head.value
+  popBack() {
+    if (this.isEmpty()) return null
+
+    const value = this.tail.value
+    this.tail = this.tail.prev
+
+    if (this.tail) {
+      this.tail.next = null
+    } else {
       this.head = null
-      this.tail = null
-      this.size--
-      return value
     }
 
-    const tail = this.tail
-    this.tail = tail.prev
-    this.tail.next = null
     this.size--
+    return value
+  }
 
-    if (!this.tail.prev) {
-      this.head = this.tail
-    }
+  front() {
+    return this.isEmpty() ? null : this.head.value
+  }
 
-    return tail.value
+  back() {
+    return this.isEmpty() ? null : this.tail.value
+  }
+
+  isEmpty() {
+    return this.size === 0
+  }
+
+  getSize() {
+    return this.size
   }
 }
 
@@ -108,28 +105,28 @@ for (let i = 1; i <= N; i++) {
 
   switch (order) {
     case 'push_front':
-      deque.push_front(Number(value))
+      deque.pushFront(Number(value))
       break
     case 'push_back':
-      deque.push_back(Number(value))
+      deque.pushBack(Number(value))
       break
     case 'pop_front':
-      ans.push(deque.pop_front() ?? -1)
+      ans.push(deque.popFront() ?? -1)
       break
     case 'pop_back':
-      ans.push(deque.pop_back() ?? -1)
+      ans.push(deque.popBack() ?? -1)
       break
     case 'size':
-      ans.push(deque.size)
+      ans.push(deque.getSize())
       break
     case 'empty':
-      ans.push(deque.size === 0 ? 1 : 0)
+      ans.push(deque.isEmpty() ? 1 : 0)
       break
     case 'front':
-      ans.push(deque.size !== 0 ? deque.head.value : -1)
+      ans.push(!deque.isEmpty() ? deque.head.value : -1)
       break
     case 'back':
-      ans.push(deque.size !== 0 ? deque.tail.value : -1)
+      ans.push(!deque.isEmpty() ? deque.tail.value : -1)
       break
   }
 }
